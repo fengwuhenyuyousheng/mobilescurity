@@ -2,6 +2,7 @@ package com.test.yang.photosafe.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -84,7 +85,18 @@ public class SpalshActivity extends AppCompatActivity {
         if (versionTextView != null) {
             versionTextView.setText("版本号："+mOldVersionName);
         }
-        getUpdateInfo();
+        SharedPreferences spConfig=getSharedPreferences("config",MODE_PRIVATE);
+        if (spConfig.getBoolean("update",true)||spConfig==null) {
+            getUpdateInfo();
+        }else{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(2000);
+                    jumpHomeActivity();
+                }
+            }).start();
+        }
     }
 
     /**
