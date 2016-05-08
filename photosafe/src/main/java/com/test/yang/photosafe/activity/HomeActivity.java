@@ -162,8 +162,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(mInputPasswordSeeCount%2==1){
-                    //显示密码
-                    etInputPassword.setInputType(0);
+                    etInputPassword.setInputType(2);
                 }else{
                     //隐藏密码
                     etInputPassword.setInputType(129);
