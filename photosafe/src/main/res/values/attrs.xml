@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="com.test.yang.photosafe.ui.SettingOptionsItem">
-        <attr name="description_on" format="string"/>
-        <attr name="description_off" format="string"/>
+        <attr name="set_title" format="string"/>
+        <attr name="set_description_on" format="string"/>
+        <attr name="set_description_off" format="string"/>
     </declare-styleable>
 </resources>

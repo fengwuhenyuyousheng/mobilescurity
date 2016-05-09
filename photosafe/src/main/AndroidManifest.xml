@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".activity.HomeActivity" />
         <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.SafeSettingOneActivity"/>
+        <activity android:name=".activity.SafeSettingTwoActivity"/>
+        <activity android:name=".activity.SafeSettingThreeActivity"/>
+        <activity android:name=".activity.SafeSettingFourActivity"/>
     </application>
 
 </manifest>

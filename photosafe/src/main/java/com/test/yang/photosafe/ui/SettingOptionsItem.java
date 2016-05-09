@@ -18,8 +18,8 @@ public class SettingOptionsItem extends RelativeLayout{
     private TextView settingText;
     private TextView settingTextDescription;
     private CheckBox settingCheckBox;
-    private String description_on;
-    private String description_off;
+    private String setDescriptionOn;
+    private String setDescriptionOff;
 
     public SettingOptionsItem(Context context) {
         super(context);
@@ -29,15 +29,15 @@ public class SettingOptionsItem extends RelativeLayout{
     public SettingOptionsItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize();
-        String title=attrs.getAttributeValue("http://schemas.android.com/apk/res/android","title");
-        description_on=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","description_on");
-        description_off=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","description_off");
-        settingText.setText(title);
+        String setTitle=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_title");
+        setDescriptionOn=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_description_on");
+        setDescriptionOff=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_description_off");
+        settingText.setText(setTitle);
         if(getSettingCheckBoxisCheck()){
-            settingTextDescription.setText(description_on);
+            settingTextDescription.setText(setDescriptionOn);
             settingCheckBox.setChecked(true);
         }else{
-            settingTextDescription.setText(description_off);
+            settingTextDescription.setText(setDescriptionOff);
             settingCheckBox.setChecked(false);
         }
     }
@@ -81,10 +81,10 @@ public class SettingOptionsItem extends RelativeLayout{
     public void setSettingCheckBox(Boolean isgCheck){
         if(isgCheck) {
             settingCheckBox.setChecked(true);
-            settingTextDescription.setText(description_on);
+            settingTextDescription.setText(setDescriptionOn);
         }else{
             settingCheckBox.setChecked(false);
-            settingTextDescription.setText(description_off);
+            settingTextDescription.setText(setDescriptionOff);
         }
     }
 

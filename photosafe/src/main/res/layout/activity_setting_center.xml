@@ -19,9 +19,9 @@
         android:id="@+id/update_option"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:title="自动更新"
 
-        itheima:description_on="开启自动更新提示"
-        itheima:description_off="关闭自动更新提示"/>
+        itheima:set_title="自动更新"
+        itheima:set_description_on="开启自动更新提示"
+        itheima:set_description_off="关闭自动更新提示"/>
 
 </LinearLayout>

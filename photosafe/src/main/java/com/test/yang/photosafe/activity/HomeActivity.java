@@ -88,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         ivSetPasswordSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSetPasswordSeeCount++;
                 if(mSetPasswordSeeCount%2==1){
                     //显示密码
                     etSetPassword.setInputType(2);
@@ -97,12 +98,12 @@ public class HomeActivity extends AppCompatActivity {
                     etSetPassword.setInputType(129);
                     etAffirmPassword.setInputType(129);
                 }
-                mSetPasswordSeeCount++;
             }
         });
         ivAffirmPasswordSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSetPasswordSeeCount++;
                 if(mSetPasswordSeeCount%2==1){
                     //显示密码
                     etSetPassword.setInputType(2);
@@ -112,7 +113,6 @@ public class HomeActivity extends AppCompatActivity {
                     etSetPassword.setInputType(129);
                     etAffirmPassword.setInputType(129);
                 }
-                mSetPasswordSeeCount++;
             }
         });
         btEnsure.setOnClickListener(new View.OnClickListener() {
@@ -161,13 +161,14 @@ public class HomeActivity extends AppCompatActivity {
         ivInputPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mInputPasswordSeeCount++;
                 if(mInputPasswordSeeCount%2==1){
+                    //显示密码
                     etInputPassword.setInputType(2);
                 }else{
                     //隐藏密码
                     etInputPassword.setInputType(129);
                 }
-                mInputPasswordSeeCount++;
             }
         });
         btInputEnsure.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                 if(MD5Tools.passwordMD5(inputPassword).equals(savePassword)){
                     alertDialog.dismiss();
                     Toast.makeText(getApplicationContext(),"密码正确",Toast.LENGTH_SHORT).show();
+                    Intent jumpSafeSettingActivity=new Intent(HomeActivity.this,SafeSettingOneActivity.class);
+                    startActivity(jumpSafeSettingActivity);
                     return;
                 }else{
                     Toast.makeText(getApplicationContext(),"密码不正确",Toast.LENGTH_SHORT).show();
