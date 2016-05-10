@@ -21,6 +21,7 @@ public class SafeSettingOneActivity extends SafeSettingBaseActivity{
         Intent nextActivity=new Intent(this,SafeSettingTwoActivity.class);
         startActivity(nextActivity);
         finish();
+        overridePendingTransition(R.anim.next_enter_activity_one,R.anim.next_exit_activity_one);
     }
 
     @Override

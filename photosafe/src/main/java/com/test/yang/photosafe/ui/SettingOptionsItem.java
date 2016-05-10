@@ -51,7 +51,7 @@ public class SettingOptionsItem extends RelativeLayout{
      * 初始化自定义控件
      */
     public void initialize(){
-        View view=View.inflate(getContext(),R.layout.setting_center_item,this);
+        View view=View.inflate(getContext(),R.layout.item_setting_center,this);
         settingText= (TextView) view.findViewById(R.id.setting_text);
         settingTextDescription= (TextView) view.findViewById(R.id.setting_description);
         settingCheckBox= (CheckBox) view.findViewById(R.id.setting_checkbox);
@@ -60,7 +60,7 @@ public class SettingOptionsItem extends RelativeLayout{
 
     /**
      * 设置选项标题
-     * @param settingTitle
+     * @param settingTitle 选项标题
      */
     public void setSettingTitle(String settingTitle){
         settingText.setText(settingTitle);
@@ -68,7 +68,7 @@ public class SettingOptionsItem extends RelativeLayout{
 
     /**
      * 设置选项的内容
-     * @param settingDescription
+     * @param settingDescription 选项内容
      */
     public void setSettingDescription(String settingDescription){
         settingTextDescription.setText(settingDescription);
@@ -76,7 +76,7 @@ public class SettingOptionsItem extends RelativeLayout{
 
     /**
      * 设置选项的复选框
-     * @param isgCheck
+     * @param isgCheck 复选框状态
      */
     public void setSettingCheckBox(Boolean isgCheck){
         if(isgCheck) {

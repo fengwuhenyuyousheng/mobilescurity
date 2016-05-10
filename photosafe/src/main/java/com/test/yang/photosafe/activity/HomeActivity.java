@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void showSetPasswordDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        View view=View.inflate(getApplicationContext(),R.layout.safe_set_password,null);
+        View view=View.inflate(getApplicationContext(),R.layout.dialog_set_password,null);
         final EditText etSetPassword= (EditText) view.findViewById(R.id.set_password);
         final EditText etAffirmPassword= (EditText) view.findViewById(R.id.affirm_password);
         Button btCancel=(Button)view.findViewById(R.id.cancel_button);
@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void showInputPasswordDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        View view=View.inflate(getApplicationContext(),R.layout.safe_input_password,null);
+        View view=View.inflate(getApplicationContext(),R.layout.dialog_input_password,null);
         final EditText etInputPassword= (EditText) view.findViewById(R.id.affirm_password);
         Button btInputCancel=(Button)view.findViewById(R.id.cancel_button);
         Button btInputEnsure= (Button) view.findViewById(R.id.ensure_button);
@@ -183,8 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                 if(MD5Tools.passwordMD5(inputPassword).equals(savePassword)){
                     alertDialog.dismiss();
                     Toast.makeText(getApplicationContext(),"密码正确",Toast.LENGTH_SHORT).show();
-                    Intent jumpSafeSettingActivity=new Intent(HomeActivity.this,SafeSettingOneActivity.class);
-                    startActivity(jumpSafeSettingActivity);
+                    Intent jumpPhotoSafeActivity=new Intent(HomeActivity.this,PhotoSafeActivity.class);
+                    startActivity(jumpPhotoSafeActivity);
                     return;
                 }else{
                     Toast.makeText(getApplicationContext(),"密码不正确",Toast.LENGTH_SHORT).show();

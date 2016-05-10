@@ -43,7 +43,7 @@ public class HomeGridViewAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view=View.inflate(mContext,R.layout.home_gridview_item,null);
+        View view=View.inflate(mContext,R.layout.item_home_gridview,null);
         ImageView ivImageView= (ImageView) view.findViewById(R.id.home_grid_view_image);
         TextView tvTextView= (TextView) view.findViewById(R.id.home_grid_view_text);
         ivImageView.setImageResource(imageId[position]);

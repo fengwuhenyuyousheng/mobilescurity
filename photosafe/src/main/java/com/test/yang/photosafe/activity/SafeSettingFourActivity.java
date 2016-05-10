@@ -1,6 +1,7 @@
 package com.test.yang.photosafe.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.test.yang.photosafe.R;
@@ -18,9 +19,13 @@ public class SafeSettingFourActivity extends SafeSettingBaseActivity{
 
     @Override
     public void nextActivitySubClass() {
-        Intent nextActivity=new Intent(this,HomeActivity.class);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putBoolean("first_enter_safe",false);
+        editor.commit();
+        Intent nextActivity=new Intent(this,PhotoSafeActivity.class);
         startActivity(nextActivity);
         finish();
+        overridePendingTransition(R.anim.next_enter_activity_one,R.anim.next_exit_activity_one);
     }
 
     @Override
@@ -28,5 +33,7 @@ public class SafeSettingFourActivity extends SafeSettingBaseActivity{
         Intent previousActivity=new Intent(this,SafeSettingThreeActivity.class);
         startActivity(previousActivity);
         finish();
+        overridePendingTransition(R.anim.previous_enter_activity_one,R.anim.previous_exit_activity_one);
+
     }
 }
