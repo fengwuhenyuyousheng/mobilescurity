@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**这是查询工具类
+/**这是通过数据库查询联系人
  * Created by Administrator on 2016/5/10.
  */
 public class ContactEngine {

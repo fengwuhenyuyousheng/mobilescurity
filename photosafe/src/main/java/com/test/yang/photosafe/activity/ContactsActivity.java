@@ -2,8 +2,6 @@ package com.test.yang.photosafe.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.test.yang.photosafe.R;
 import com.test.yang.photosafe.engine.ContactEngine;
+import com.test.yang.photosafe.tools.MyAsycnTaks;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +32,7 @@ public class ContactsActivity extends AppCompatActivity{
     private ProgressBar loadProgressBar;
 
     private List<HashMap<String,String>> allContactsList;
-    private Handler handler=new Handler(){
-        public void handleMessage(Message message){
-            contactsListView.setAdapter(new MyContactsAdapter());
-            loadProgressBar.setVisibility(View.GONE);
-        }
-    };
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -47,14 +41,28 @@ public class ContactsActivity extends AppCompatActivity{
         //通过框架初始化注解的控件
         ViewUtils.inject(this);
 
-        loadProgressBar.setVisibility(View.VISIBLE);
-        new Thread(){
-            public void run(){
+        new MyAsycnTaks(){
+
+            @Override
+            public void preTask() {
+                loadProgressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void doinTask() {
                 //获取联系人
                 allContactsList= ContactEngine.getAllContactInfo(getApplicationContext());
-                handler.sendEmptyMessage(0);
             }
-        }.start();
+
+            @Override
+            public void posTask() {
+                contactsListView.setAdapter(new MyContactsAdapter());
+                loadProgressBar.setVisibility(View.GONE);
+            }
+        };
+
+
+
 
         contactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -11,6 +11,7 @@
         android:text="设置完成" />
 
     <CheckBox
+        android:id="@+id/safe_protect_check_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
