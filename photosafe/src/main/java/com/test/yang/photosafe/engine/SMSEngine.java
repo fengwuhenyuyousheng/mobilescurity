@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import com.test.yang.photosafe.model.SMSInfo;
 
@@ -26,11 +27,13 @@ public class SMSEngine {
         //获取内容解析者
         ContentResolver contentResolver=context.getContentResolver();
         //获取内容提供者地址并生成查询地址
-        Uri smsInbox=Uri.parse("content://sms/inbox");
+        Uri smsInbox=Uri.parse("content://sms");
         //根据地址查询表
         Cursor cursor=contentResolver.query(smsInbox,new String[]{"address","body"},null,null,null);
+        Log.d("SMSEngine","结果长度:"+cursor.getCount());
         //解析Cursor
         while (cursor.moveToNext()){
+            Log.d("SMSEngine","分析查到的结果");
             SMSInfo smsInfo=new SMSInfo();
             smsInfo.setSmsAddress(cursor.getString(cursor.getColumnIndex("address")));
             smsInfo.setSmsBody(cursor.getString(cursor.getColumnIndex("body")));
@@ -38,6 +41,8 @@ public class SMSEngine {
         }
         cursor.close();
         return arrayList;
+
+
     }
 
 }

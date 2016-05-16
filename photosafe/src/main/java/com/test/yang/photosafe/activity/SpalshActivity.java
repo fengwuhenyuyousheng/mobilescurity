@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.util.IOUtils;
 import com.test.yang.photosafe.R;
 import com.test.yang.photosafe.tools.StreamTools;
 
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -97,6 +100,48 @@ public class SpalshActivity extends AppCompatActivity {
                 }
             }).start();
         }
+        codyDB();
+    }
+
+    /**
+     * 拷贝数据库
+     */
+    private void codyDB() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File file=new File(getFilesDir(),"address.db");
+                if(!file.exists()) {
+                    //从assects目录中读取数据库
+                    //获取assects管理者
+                    AssetManager assetManager = getAssets();
+                    InputStream inputStream = null;
+                    FileOutputStream fileOutputStream = null;
+                    try {
+                        //打开数据库获得输入流
+                        inputStream = assetManager.open("address.db");
+                        //封装存放路径
+                        fileOutputStream = new FileOutputStream(file);
+                        //新建缓冲流
+                        byte[] b = new byte[1024];
+                        int len = -1;
+                        while ((len = inputStream.read(b)) != -1 ) {
+                            fileOutputStream.write(b, 0, len);
+                        }
+                        Log.d("codyDB","复制数据库");
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+//            inputStream.close();
+//            fileOutputStream.close();
+                        IOUtils.closeQuietly(inputStream);
+                        IOUtils.closeQuietly(fileOutputStream);
+                    }
+                }
+            }
+        }).start();
+
     }
 
     /**

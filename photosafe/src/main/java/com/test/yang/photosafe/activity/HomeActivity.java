@@ -60,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
                     case 6:
                         break;
                     case 7:
+                        Intent jumpSearchSpaceActivity=new Intent(HomeActivity.this,SearchSpaceActivity.class);
+                        startActivity(jumpSearchSpaceActivity);
                         break;
                     case 8:
                         Intent jumpSetingActivity=new Intent(HomeActivity.this,SettingActivity.class);

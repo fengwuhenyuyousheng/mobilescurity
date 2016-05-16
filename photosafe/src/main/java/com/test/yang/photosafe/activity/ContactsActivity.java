@@ -3,6 +3,7 @@ package com.test.yang.photosafe.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +20,8 @@ import com.test.yang.photosafe.tools.MyAsycnTaks;
 
 import java.util.HashMap;
 import java.util.List;
+
+
 
 /**这是联系人界面
  * Created by Administrator on 2016/5/10.
@@ -52,6 +55,9 @@ public class ContactsActivity extends AppCompatActivity{
             public void doinTask() {
                 //获取联系人
                 allContactsList= ContactEngine.getAllContactInfo(getApplicationContext());
+                for(HashMap<String,String> hashMap:allContactsList){
+                    Log.d("ContactEngine",hashMap.get("name")+"-----"+hashMap.get("number"));
+                }
             }
 
             @Override
@@ -59,7 +65,7 @@ public class ContactsActivity extends AppCompatActivity{
                 contactsListView.setAdapter(new MyContactsAdapter());
                 loadProgressBar.setVisibility(View.GONE);
             }
-        };
+        }.execute();
 
 
 
