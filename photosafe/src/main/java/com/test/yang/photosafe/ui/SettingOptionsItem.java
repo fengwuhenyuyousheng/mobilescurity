@@ -15,11 +15,12 @@ import com.test.yang.photosafe.R;
 public class SettingOptionsItem extends RelativeLayout{
 
 
-    private TextView settingText;
+    private TextView settingTitle;
     private TextView settingTextDescription;
     private CheckBox settingCheckBox;
     private String setDescriptionOn;
     private String setDescriptionOff;
+
 
     public SettingOptionsItem(Context context) {
         super(context);
@@ -32,7 +33,7 @@ public class SettingOptionsItem extends RelativeLayout{
         String setTitle=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_title");
         setDescriptionOn=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_description_on");
         setDescriptionOff=attrs.getAttributeValue("http://schemas.android.com/apk/res-auto","set_description_off");
-        settingText.setText(setTitle);
+        settingTitle.setText(setTitle);
         if(getSettingCheckBoxisCheck()){
             settingTextDescription.setText(setDescriptionOn);
             settingCheckBox.setChecked(true);
@@ -52,7 +53,7 @@ public class SettingOptionsItem extends RelativeLayout{
      */
     public void initialize(){
         View view=View.inflate(getContext(),R.layout.item_setting_center,this);
-        settingText= (TextView) view.findViewById(R.id.setting_text);
+        settingTitle = (TextView) view.findViewById(R.id.setting_title);
         settingTextDescription= (TextView) view.findViewById(R.id.setting_description);
         settingCheckBox= (CheckBox) view.findViewById(R.id.setting_checkbox);
 
@@ -60,18 +61,18 @@ public class SettingOptionsItem extends RelativeLayout{
 
     /**
      * 设置选项标题
-     * @param settingTitle 选项标题
+     * @param setTitle 选项标题
      */
-    public void setSettingTitle(String settingTitle){
-        settingText.setText(settingTitle);
+    public void setSettingTitle(String setTitle){
+        this.settingTitle.setText(setTitle);
     }
 
     /**
      * 设置选项的内容
-     * @param settingDescription 选项内容
+     * @param setTextDescription 选项内容
      */
-    public void setSettingDescription(String settingDescription){
-        settingTextDescription.setText(settingDescription);
+    public void setSettingDescription(String setTextDescription){
+        this.settingTextDescription.setText(setTextDescription);
     }
 
     /**
@@ -93,7 +94,7 @@ public class SettingOptionsItem extends RelativeLayout{
      * @return 复选框的状态
      */
     public Boolean getSettingCheckBoxisCheck(){
-        return settingCheckBox.isChecked();
+        return this.settingCheckBox.isChecked();
     }
 
 }

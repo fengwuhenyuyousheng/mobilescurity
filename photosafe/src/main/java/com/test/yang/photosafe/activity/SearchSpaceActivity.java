@@ -2,7 +2,9 @@ package com.test.yang.photosafe.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +31,31 @@ public class SearchSpaceActivity extends AppCompatActivity{
         searchSpaceEditText= (EditText) findViewById(R.id.search_space_number_edit_text);
         searchSpaceButton= (Button) findViewById(R.id.search_space_button);
         searchSpaceText= (TextView) findViewById(R.id.search_space_text);
-        searchSpaceText.setVisibility(View.INVISIBLE);
+        searchSpaceEditText.addTextChangedListener(new TextWatcher() {
+            //当文本变化之前调用
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            //文本变化时调用
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //获取输入框内容
+                String number=searchSpaceEditText.getText().toString().trim();
+                //查询号码归属地
+                if(!TextUtils.isEmpty(number)){
+                    String queryAddress = DBOperate.queryAddress(number, getApplicationContext());
+                    if (!TextUtils.isEmpty(queryAddress)) {
+                        searchSpaceText.setText(queryAddress);
+                    }
+                }
+            }
+            //当文本变化之后调用
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     /**
@@ -49,7 +75,6 @@ public class SearchSpaceActivity extends AppCompatActivity{
             //4.判断查询的号码归属地是否为空
             if (!TextUtils.isEmpty(queryAddress)) {
                 searchSpaceText.setText(queryAddress);
-                searchSpaceText.setVisibility(View.VISIBLE);
             }
 
     }

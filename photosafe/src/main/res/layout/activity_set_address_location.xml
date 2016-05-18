@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparentGrey">
+
+    <TextView
+        android:id="@+id/text_view_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSkyBlue"
+        android:padding="10dp"
+        android:text="按住提示框拖到任意位置\n按手机返回键立即生效"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:textSize="20sp"
+        android:textColor="@color/colorBlack"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/toast_address_view"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGreen">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/app_log_small"/>
+        <TextView
+            android:id="@+id/toast_address_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="32dp"
+            android:textColor="@color/colorBlue"
+            android:text="双击居中"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSkyBlue"
+        android:padding="10dp"
+        android:text="按住提示框拖到任意位置\n按手机返回键立即生效"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:textSize="20sp"
+        android:textColor="@color/colorBlack"/>
+
+</RelativeLayout>

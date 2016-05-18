@@ -1,12 +1,18 @@
 package com.test.yang.photosafe.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.test.yang.photosafe.R;
+import com.test.yang.photosafe.service.AddressService;
+import com.test.yang.photosafe.tools.RunningAddress;
 import com.test.yang.photosafe.ui.SettingOptionsItem;
+import com.test.yang.photosafe.ui.SettingToastStyleItem;
 
 /**这是设置中心界面
  * Created by Administrator on 2016/5/6.
@@ -14,7 +20,11 @@ import com.test.yang.photosafe.ui.SettingOptionsItem;
 public class SettingActivity extends AppCompatActivity{
 
     private SettingOptionsItem updateSettingItem;
+    private SettingOptionsItem openAddressService;
+    private SettingToastStyleItem setToastStyle;
     private SharedPreferences spConfig;
+    private SettingToastStyleItem setToastLocation;
+    private final String[] items={"半透明","活力橙","卫士蓝","金属灰","苹果绿"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -22,6 +32,9 @@ public class SettingActivity extends AppCompatActivity{
         setContentView(R.layout.activity_setting_center);
         spConfig=getSharedPreferences("config",MODE_PRIVATE);
         updateSettingItem=(SettingOptionsItem)findViewById(R.id.update_option);
+        openAddressService= (SettingOptionsItem) findViewById(R.id.open_address_service);
+        setToastStyle= (SettingToastStyleItem) findViewById(R.id.set_toast_style);
+        setToastLocation= (SettingToastStyleItem) findViewById(R.id.set_toast_location);
         initUpdateOption();
         updateSettingItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +58,47 @@ public class SettingActivity extends AppCompatActivity{
                 edit.commit();
             }
         });
+        setToastStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出单选对话框
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                //设置图标
+                builder.setIcon(R.drawable.app_log_small);
+                //设置标题
+                builder.setTitle("归属地提示框风格");
+                //设置单选框
+                //items : 选项的文本的数组
+                //checkedItem : 选中的选项
+                //listener : 点击事件
+                //设置单选框选中选项的回显操作
+                builder.setSingleChoiceItems(items, spConfig.getInt("which", 0), new DialogInterface.OnClickListener(){
+                    //which : 选中的选项索引值
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        SharedPreferences.Editor edit = spConfig.edit();
+                        edit.putInt("which", which);
+                        edit.commit();
+                        //1.设置自定义组合控件描述信息文本
+                        setToastStyle.setToastStyleDescription(items[which]);//根据选中选项索引值从items数组中获取出相应文本,设置给描述信息控件
+                        //2.隐藏对话框
+                        dialog.dismiss();
+                    }
+                });
+                //设置取消按钮
+                builder.setNegativeButton("取消", null);//当点击按钮只是需要进行隐藏对话框的操作的话,参数2可以写null,表示隐藏对话框
+                builder.show();
+            }
+        });
+        setToastLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent jumpToastLocationActivity=new Intent(SettingActivity.this,SettingToastLocationActivity.class);
+                startActivity(jumpToastLocationActivity);
+            }
+        });
+
     }
 
 
@@ -57,5 +111,47 @@ public class SettingActivity extends AppCompatActivity{
         }else {
             updateSettingItem.setSettingCheckBox(false);
         }
+        setToastStyle.setToastStyleTitle("归属地提示框风格");
+        setToastStyle.setToastStyleDescription(items[spConfig.getInt("which", 0)]);
+        setToastLocation.setToastStyleTitle("归属地提示框显示位置");
+        setToastLocation.setToastStyleDescription("点击设置归属地提示框显示的位置");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        openAddress();
+    }
+
+    /**
+     * 显示电话归属地
+     */
+    private void openAddress(){
+        if(RunningAddress.isRunningAddressService(
+                "com.test.yang.photosafe.service.AddressService",getApplicationContext())){
+            //开启电话归属地服务
+            openAddressService.setSettingCheckBox(true);
+        }else{
+            //关闭电话归属地服务
+            openAddressService.setSettingCheckBox(false);
+        }
+        openAddressService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this,AddressService.class);
+                //根据checkbox的状态设置描述信息的状态
+                //isChecked() : 之前的状态
+                if (openAddressService.getSettingCheckBoxisCheck()) {
+                    //关闭提示
+                    stopService(intent);
+                    //更新checkbox的状态
+                    openAddressService.setSettingCheckBox(false);
+                }else{
+                    //打开提示
+                    startService(intent);
+                    openAddressService.setSettingCheckBox(true);
+                }
+            }
+        });
     }
 }

@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.util.IOUtils;
 import com.test.yang.photosafe.R;
+import com.test.yang.photosafe.service.AddressService;
 import com.test.yang.photosafe.tools.StreamTools;
 
 import org.json.JSONException;
@@ -100,7 +101,18 @@ public class SpalshActivity extends AppCompatActivity {
                 }
             }).start();
         }
+
         codyDB();
+
+        openAddressService();
+    }
+
+    /**
+     * 开启电话归属地查询服务
+     */
+    private void openAddressService() {
+        Intent openAddressService=new Intent(this, AddressService.class);
+        startService(openAddressService);
     }
 
     /**
