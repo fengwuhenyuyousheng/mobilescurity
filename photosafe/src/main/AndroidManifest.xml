@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -38,16 +38,17 @@
         <activity android:name=".activity.PhotoSafeActivity" />
         <activity android:name=".activity.ContactsActivity" />
         <activity android:name=".activity.SearchSpaceActivity" />
-        <activity android:name=".activity.BlackRollActivity"/>
-        <activity android:name=".activity.SettingToastLocationActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".activity.BlackRollActivity" />
+        <activity
+            android:name=".activity.SettingToastLocationActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver android:name=".receiver.BootCompleteReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.SMSReceiver">s
+        <receiver android:name=".receiver.SMSReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -67,8 +68,8 @@
         </receiver>
 
         <service android:name=".service.GPSService" />
-        <service
-            android:name=".service.AddressService"/>
+        <service android:name=".service.AddressService" />
+        <service android:name=".service.CallSmsService"/>
     </application>
 
 </manifest>

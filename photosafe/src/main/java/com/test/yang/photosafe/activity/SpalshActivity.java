@@ -25,6 +25,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.util.IOUtils;
 import com.test.yang.photosafe.R;
 import com.test.yang.photosafe.service.AddressService;
+import com.test.yang.photosafe.service.CallSmsService;
+import com.test.yang.photosafe.tools.RunningAddress;
 import com.test.yang.photosafe.tools.StreamTools;
 
 import org.json.JSONException;
@@ -48,6 +50,7 @@ public class SpalshActivity extends AppCompatActivity {
     protected static final int MESSAGE_FAIL_JSON =2 ;
     protected static final int MESSAGE_FAIL_NETWORK=3;
     protected static final int MESSAGE_FAIL_URL=4;
+    private SharedPreferences mSharedPreferences;
     private String mOldVersionName;
     private String mNewVersionName;
     private String mApkURL;
@@ -84,13 +87,13 @@ public class SpalshActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalsh);
+        mSharedPreferences=getSharedPreferences("config",MODE_PRIVATE);
         mOldVersionName=getVersionName();
         TextView versionTextView = (TextView) findViewById(R.id.versions_text_view);
         if (versionTextView != null) {
             versionTextView.setText("版本号："+mOldVersionName);
         }
-        SharedPreferences spConfig=getSharedPreferences("config",MODE_PRIVATE);
-        if (spConfig.getBoolean("update",true)||spConfig==null) {
+        if (mSharedPreferences.getBoolean("update",true)||mSharedPreferences==null) {
             getUpdateInfo();
         }else{
             new Thread(new Runnable() {
@@ -104,9 +107,23 @@ public class SpalshActivity extends AppCompatActivity {
 
         codyDB();
 
-        openAddressService();
+        if(mSharedPreferences.getBoolean("openAddressService",false) &&
+                !RunningAddress.isRunningAddressService("com.test.yang.photosafe.service.AddressService",
+                        getApplicationContext())){
+            openAddressService();
+        }
+        if(mSharedPreferences.getBoolean("openCallSmsService",false) &&
+                !RunningAddress.isRunningAddressService("com.test.yang.photosafe.service.CallSmsService",
+                        getApplicationContext())){
+            openCallSmsService();
+        }
+
     }
 
+    private  void openCallSmsService(){
+        Intent openAddressService=new Intent(this, CallSmsService.class);
+        startService(openAddressService);
+    }
     /**
      * 开启电话归属地查询服务
      */

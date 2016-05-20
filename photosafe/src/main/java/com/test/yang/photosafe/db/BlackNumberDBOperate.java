@@ -65,7 +65,7 @@ public class BlackNumberDBOperate {
     /**
      * 通过黑名单号码,查询黑名单号码的拦截模式
      */
-    public int queryBlackNumMode(String blackNumber){
+    public int queryBlackNumberMode(String blackNumber){
         int mode=-1;
         //1.获取数据库
         SQLiteDatabase database = blackNumberDBHelper.getReadableDatabase();
@@ -92,7 +92,8 @@ public class BlackNumberDBOperate {
      * 根据黑名单号码,删除相应的数据
      * @param blackNumber
      */
-    public void deleteBlackNum(String blackNumber){
+
+    public void deleteBlackNumber(String blackNumber){
         //1.获取数据库
         SQLiteDatabase database = blackNumberDBHelper.getWritableDatabase();
         //2.删除

@@ -259,7 +259,7 @@ public class BlackRollActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //删除黑名单操作
                             //1.删除数据库中的黑名单号码
-                            mBlackNumberDBOperate.deleteBlackNum(blackNumberInfo.getBlackNumber());
+                            mBlackNumberDBOperate.deleteBlackNumber(blackNumberInfo.getBlackNumber());
                             //2.删除界面中已经显示黑名单号码
                             //2.1从存放有所有数据的list集合中删除相应的数据
                             mBlackNumberInfoList.remove(position);//删除条目对应位置的相应的数据

@@ -42,4 +42,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.test.yang.photosafe.ui.SettingOptionsItem
+        android:id="@+id/open_call_sms_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        itheima:set_description_off="关闭电话短信拦截"
+        itheima:set_description_on="开启电话短信拦截"
+        itheima:set_title="电话短信拦截" />
+
 </LinearLayout>

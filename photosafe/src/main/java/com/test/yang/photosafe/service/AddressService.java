@@ -79,6 +79,7 @@ public class AddressService extends Service {
                     String queryAddress = AddressDBOperate.queryAddress(incomingNumber, getApplicationContext());
                     if (!TextUtils.isEmpty(queryAddress)) {
                         showToast(queryAddress);
+                        setTouch();
                     }
                     break;
                 //通话中状态
