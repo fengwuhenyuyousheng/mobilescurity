@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.test.yang.photosafe.R;
-import com.test.yang.photosafe.db.DBOperate;
+import com.test.yang.photosafe.db.AddressDBOperate;
 
 /**这是号码归属地查询界面
  * Created by Administrator on 2016/5/14.
@@ -44,7 +44,7 @@ public class SearchSpaceActivity extends AppCompatActivity{
                 String number=searchSpaceEditText.getText().toString().trim();
                 //查询号码归属地
                 if(!TextUtils.isEmpty(number)){
-                    String queryAddress = DBOperate.queryAddress(number, getApplicationContext());
+                    String queryAddress = AddressDBOperate.queryAddress(number, getApplicationContext());
                     if (!TextUtils.isEmpty(queryAddress)) {
                         searchSpaceText.setText(queryAddress);
                     }
@@ -71,7 +71,7 @@ public class SearchSpaceActivity extends AppCompatActivity{
                 return;
             }
             //3.根据号码查询号码归属地
-            String queryAddress = DBOperate.queryAddress(phone, getApplicationContext());
+            String queryAddress = AddressDBOperate.queryAddress(phone, getApplicationContext());
             //4.判断查询的号码归属地是否为空
             if (!TextUtils.isEmpty(queryAddress)) {
                 searchSpaceText.setText(queryAddress);

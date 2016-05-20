@@ -38,6 +38,7 @@
         <activity android:name=".activity.PhotoSafeActivity" />
         <activity android:name=".activity.ContactsActivity" />
         <activity android:name=".activity.SearchSpaceActivity" />
+        <activity android:name=".activity.BlackRollActivity"/>
         <activity android:name=".activity.SettingToastLocationActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 

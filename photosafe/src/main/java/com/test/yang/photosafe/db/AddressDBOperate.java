@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
 
-/**这是对数据库操作的类
+/**这是对地址数据库操作的类
  * Created by Administrator on 2016/5/15.
  */
-public class DBOperate {
+public class AddressDBOperate {
 
     /**
      * 根据输入的号码查询数据库

@@ -19,7 +19,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.test.yang.photosafe.R;
-import com.test.yang.photosafe.db.DBOperate;
+import com.test.yang.photosafe.db.AddressDBOperate;
 
 public class AddressService extends Service {
 
@@ -76,7 +76,7 @@ public class AddressService extends Service {
                     break;
                 //响铃状态
                 case TelephonyManager.CALL_STATE_RINGING:
-                    String queryAddress = DBOperate.queryAddress(incomingNumber, getApplicationContext());
+                    String queryAddress = AddressDBOperate.queryAddress(incomingNumber, getApplicationContext());
                     if (!TextUtils.isEmpty(queryAddress)) {
                         showToast(queryAddress);
                     }
@@ -233,7 +233,7 @@ public class AddressService extends Service {
             //得到发送广播时设置的 initialData 的数据(即电话号码)
             String number=getResultData();
             //查询号码归属地
-            String queryAddress = DBOperate.queryAddress(number, getApplicationContext());
+            String queryAddress = AddressDBOperate.queryAddress(number, getApplicationContext());
             //3.判断号码归属地是否为空
             if (!TextUtils.isEmpty(queryAddress)) {
                 //显示toast

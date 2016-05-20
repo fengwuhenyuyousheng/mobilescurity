@@ -48,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         break;
                     case 1:
+                        Intent jumpBlackRollActivity=new Intent(HomeActivity.this,BlackRollActivity.class);
+                        startActivity(jumpBlackRollActivity);
                         break;
                     case 2:
                         break;
