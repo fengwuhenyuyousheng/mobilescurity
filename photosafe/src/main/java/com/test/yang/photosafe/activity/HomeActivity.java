@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(jumpBlackRollActivity);
                         break;
                     case 2:
+                        Intent jumpSoftwareManagementActivity=new Intent(HomeActivity.this,SoftwareManagementActivity.class);
+                        startActivity(jumpSoftwareManagementActivity);
                         break;
                     case 3:
                         break;
@@ -66,8 +68,8 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(jumpSearchSpaceActivity);
                         break;
                     case 8:
-                        Intent jumpSetingActivity=new Intent(HomeActivity.this,SettingActivity.class);
-                        startActivity(jumpSetingActivity);
+                        Intent jumpSettingActivity=new Intent(HomeActivity.this,SettingActivity.class);
+                        startActivity(jumpSettingActivity);
                         break;
                     default:
                         break;

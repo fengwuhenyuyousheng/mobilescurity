@@ -67,7 +67,7 @@ public class BlackRollActivity extends AppCompatActivity {
             }
 
             @Override
-            public void doinTask() {
+            public void doInTask() {
 //                Log.d("BlackRollActivity","数据库查询开始");
                 if(mBlackNumberInfoList==null) {
                     mBlackNumberInfoList = mBlackNumberDBOperate.querySubStepBlackNumber(maxNumber, startIndex);
@@ -220,7 +220,7 @@ public class BlackRollActivity extends AppCompatActivity {
             final BlackNumberInfo blackNumberInfo = mBlackNumberInfoList.get(position);
             View view;
             ViewHolder viewHolder;
-            if(convertView==null){
+            if(convertView == null){
                 view=View.inflate(getApplicationContext(),R.layout.item_black_roll,null);
                 viewHolder=new ViewHolder();
                 viewHolder.blackNumberText= (TextView) view.findViewById(R.id.black_number_text);

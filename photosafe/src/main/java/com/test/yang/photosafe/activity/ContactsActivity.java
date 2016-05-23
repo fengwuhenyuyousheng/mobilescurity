@@ -52,7 +52,7 @@ public class ContactsActivity extends AppCompatActivity{
             }
 
             @Override
-            public void doinTask() {
+            public void doInTask() {
                 //获取联系人
                 allContactsList= ContactEngine.getAllContactInfo(getApplicationContext());
                 for(HashMap<String,String> hashMap:allContactsList){

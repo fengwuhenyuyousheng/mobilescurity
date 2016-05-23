@@ -136,9 +136,9 @@ public class BlackNumberDBOperate {
         Cursor cursor=database.rawQuery("select black_number,mode from "+
                 blackNumberDBHelper.DB_TABLE_NAME +" order by _id desc limit ? offset ?",
                 new String[]{maxNumber+"",startIndex+""});
-        BlackNumberInfo blackNumberInfo=new BlackNumberInfo();
         List<BlackNumberInfo> blackNumberInfoList=new ArrayList<BlackNumberInfo>();
         while (cursor.moveToNext()){
+            BlackNumberInfo blackNumberInfo=new BlackNumberInfo();
             blackNumberInfo.setBlackNumber(cursor.getString(cursor.getColumnIndex("black_number")));
             blackNumberInfo.setBlackNumberMode(cursor.getInt(cursor.getColumnIndex("mode")));
             blackNumberInfoList.add(blackNumberInfo);

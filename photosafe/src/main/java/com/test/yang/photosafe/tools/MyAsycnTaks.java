@@ -23,8 +23,7 @@ public abstract  class MyAsycnTaks {
     /**
      * 子线程执行的方法
      */
-    public abstract void doinTask();
-
+    public abstract void doInTask();
     /**
      * 子线程执行后执行的方法
      */
@@ -37,7 +36,7 @@ public abstract  class MyAsycnTaks {
         preTask();
         new Thread(){
             public void run(){
-                doinTask();
+                doInTask();
                 handler.sendEmptyMessage(0);
             }
         }.start();
