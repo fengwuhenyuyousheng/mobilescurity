@@ -30,6 +30,7 @@ import com.test.yang.photosafe.R;
 import com.test.yang.photosafe.engine.SoftWareInfoEngine;
 import com.test.yang.photosafe.model.AppInfo;
 import com.test.yang.photosafe.tools.MyAsycnTaks;
+import com.test.yang.photosafe.tools.StoreSpaceTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class SoftwareManagementActivity extends AppCompatActivity implements Vie
     private TextView softwareCountTextView;
     private PopupWindow popupWindow;
     private AppInfo appInfo;
+    private TextView availableROMText;
+    private TextView availableSDText;
 
 
     @Override
@@ -59,13 +62,30 @@ public class SoftwareManagementActivity extends AppCompatActivity implements Vie
         softwareListView= (ListView) findViewById(R.id.software_list_view);
         loadProgressBar= (ProgressBar) findViewById(R.id.load_progress_bar);
         softwareCountTextView= (TextView) findViewById(R.id.software_count);
+        availableROMText= (TextView) findViewById(R.id.rom_available_text);
+        availableSDText= (TextView) findViewById(R.id.sd_available_text);
         appInfo=new AppInfo();
+        showAvailableSpace();
         loadSoftwareInfo();
         listViewOnScroll();
         listViewItemClick();
 
     }
 
+    /**
+     * 定义显示可用空间的方法
+     */
+    private void showAvailableSpace(){
+
+        long availableROM= StoreSpaceTools.getAvailableROM();
+        long availableSD= StoreSpaceTools.getAvailableSD();
+
+        String romSize= android.text.format.Formatter.formatFileSize(getApplicationContext(),availableROM);
+        String sdSize= android.text.format.Formatter.formatFileSize(getApplicationContext(),availableSD);
+
+        availableROMText.setText("内存可用："+romSize);
+        availableSDText.setText("SD卡可用："+sdSize);
+    }
     /**
      * listview滑动监听事件
      */
