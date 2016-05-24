@@ -38,7 +38,7 @@ import java.util.List;
 /**这是软件管理界面
  * Created by Administrator on 2016/5/20.
  */
-public class SoftwareManagementActivity extends AppCompatActivity implements View.OnClickListener{
+public class SoftwareManagerActivity extends AppCompatActivity implements View.OnClickListener{
 
     private List<AppInfo> appInfoList;
     private ListView softwareListView;
@@ -87,7 +87,7 @@ public class SoftwareManagementActivity extends AppCompatActivity implements Vie
         availableSDText.setText("SD卡可用："+sdSize);
     }
     /**
-     * listview滑动监听事件
+     * listView滑动监听事件
      */
     private void listViewOnScroll() {
         softwareListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -195,10 +195,10 @@ public class SoftwareManagementActivity extends AppCompatActivity implements Vie
                 LinearLayout popupWindowShare= (LinearLayout) contentView.findViewById(R.id.popup_window_share);
                 LinearLayout popupWindowDetail= (LinearLayout) contentView.findViewById(R.id.popup_window_detail);
 
-                popupWindowUninstall.setOnClickListener(SoftwareManagementActivity.this);
-                popupWindowStart.setOnClickListener(SoftwareManagementActivity.this);
-                popupWindowShare.setOnClickListener(SoftwareManagementActivity.this);
-                popupWindowDetail.setOnClickListener(SoftwareManagementActivity.this);
+                popupWindowUninstall.setOnClickListener(SoftwareManagerActivity.this);
+                popupWindowStart.setOnClickListener(SoftwareManagerActivity.this);
+                popupWindowShare.setOnClickListener(SoftwareManagerActivity.this);
+                popupWindowDetail.setOnClickListener(SoftwareManagerActivity.this);
 
 
                 //contentView : 显示view对象

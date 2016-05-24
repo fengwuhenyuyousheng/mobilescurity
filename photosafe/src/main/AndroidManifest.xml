@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
     <application
         android:allowBackup="true"
@@ -39,7 +40,7 @@
         <activity android:name=".activity.ContactsActivity" />
         <activity android:name=".activity.SearchSpaceActivity" />
         <activity android:name=".activity.BlackRollActivity" />
-        <activity android:name=".activity.SoftwareManagementActivity"/>
+        <activity android:name=".activity.SoftwareManagerActivity" />
         <activity
             android:name=".activity.SettingToastLocationActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -70,7 +71,9 @@
 
         <service android:name=".service.GPSService" />
         <service android:name=".service.AddressService" />
-        <service android:name=".service.CallSmsService"/>
+        <service android:name=".service.CallSmsService" />
+
+        <activity android:name=".activity.TaskManagerActivity"></activity>
     </application>
 
 </manifest>

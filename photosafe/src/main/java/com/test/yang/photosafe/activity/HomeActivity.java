@@ -52,10 +52,12 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(jumpBlackRollActivity);
                         break;
                     case 2:
-                        Intent jumpSoftwareManagementActivity=new Intent(HomeActivity.this,SoftwareManagementActivity.class);
+                        Intent jumpSoftwareManagementActivity=new Intent(HomeActivity.this,SoftwareManagerActivity.class);
                         startActivity(jumpSoftwareManagementActivity);
                         break;
                     case 3:
+                        Intent jumpTaskManagerActivity=new Intent(HomeActivity.this,TaskManagerActivity.class);
+                        startActivity(jumpTaskManagerActivity);
                         break;
                     case 4:
                         break;
