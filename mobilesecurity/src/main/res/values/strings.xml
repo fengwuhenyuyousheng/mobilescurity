@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">我的手机卫士</string>
+    <string name="device_admin_description">手机卫士的远程操作</string>
+    <string name="device_admin">手机卫士</string>
+</resources>

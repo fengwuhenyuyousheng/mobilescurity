@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PhotoSafe.iml" filepath="$PROJECT_DIR$/PhotoSafe.iml" />
-      <module fileurl="file://$PROJECT_DIR$/photosafe/photosafe.iml" filepath="$PROJECT_DIR$/photosafe/photosafe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobilesecurity/photosafe.iml" filepath="$PROJECT_DIR$/mobilesecurity/photosafe.iml" />
     </modules>
   </component>
 </project>

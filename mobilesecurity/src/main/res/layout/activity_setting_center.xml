@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itheima="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="设置中心"
+        android:textSize="25sp" />
+
+    <com.test.yang.mobilesecurity.ui.SettingOptionsItem
+        android:id="@+id/update_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        itheima:set_description_off="关闭自动更新提示"
+        itheima:set_description_on="开启自动更新提示"
+        itheima:set_title="自动更新" />
+
+    <com.test.yang.mobilesecurity.ui.SettingOptionsItem
+        android:id="@+id/open_address_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        itheima:set_description_off="关闭电话归属地提示"
+        itheima:set_description_on="开启电话归属地提示"
+        itheima:set_title="电话归属地提示" />
+
+    <com.test.yang.mobilesecurity.ui.SettingToastStyleItem
+        android:id="@+id/set_toast_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.test.yang.mobilesecurity.ui.SettingToastStyleItem
+        android:id="@+id/set_toast_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.test.yang.mobilesecurity.ui.SettingOptionsItem
+        android:id="@+id/open_call_sms_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        itheima:set_description_off="关闭电话短信拦截"
+        itheima:set_description_on="开启电话短信拦截"
+        itheima:set_title="电话短信拦截" />
+
+</LinearLayout>
