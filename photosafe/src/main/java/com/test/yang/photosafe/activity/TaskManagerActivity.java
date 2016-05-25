@@ -35,12 +35,14 @@ public class TaskManagerActivity extends AppCompatActivity {
     private Button cancelAllButton;
     private Button clearSelectButton;
     private Button clearSettingButton;
+    private TextView runningProgressCount;
+    private TextView ramAvailableText;
     private List<TaskInfo> taskInfoList;
     private List<TaskInfo> userTaskInfoList;
     private List<TaskInfo> systemTaskInfoList;
     private TaskInfo taskInfo;
     private MyTaskInfoAdapter myTaskInfoAdapter;
-
+    private int processCount;
 
 
     @Override
@@ -53,11 +55,40 @@ public class TaskManagerActivity extends AppCompatActivity {
         cancelAllButton= (Button) findViewById(R.id.cancel_all_button);
         clearSelectButton= (Button) findViewById(R.id.clear_select_button);
         clearSettingButton= (Button) findViewById(R.id.clear_setting_button);
+        runningProgressCount= (TextView) findViewById(R.id.running_progress_count);
+        ramAvailableText= (TextView) findViewById(R.id.ram_available_text);
         userTaskInfoList=new ArrayList<TaskInfo>();
         systemTaskInfoList=new ArrayList<TaskInfo>();
         loadRunningProcessInfo();
+        showProgressCountAndRAM();
         listViewItemClick();
     }
+
+    /**
+     * 定义显示进程数和可用内存
+     */
+    private void showProgressCountAndRAM(){
+        // 设置显示数据
+        // 获取相应的数据
+        // 获取运行的进程个数
+        processCount = TaskTools.getProcessCount(getApplicationContext());
+        runningProgressCount.setText("运行中进程:" + processCount + "个");
+        // 获取剩余,总内存'
+        long availableRam = TaskTools.getAvailableRam(getApplicationContext());
+        // 数据转化
+        String availableRAM = Formatter.formatFileSize(getApplicationContext(),
+                availableRam);
+        // 获取总内存
+        // 根据不同的sdk版去调用不同的方法
+        // 1.获取当前的sdk版本
+        long totalRam= TaskTools.getTotalRam();
+        // 数据转化
+        String totalRAM = Formatter.formatFileSize(getApplicationContext(),
+                totalRam);
+        ramAvailableText.setText("剩余/总内存:" + availableRAM + "/"
+                + totalRAM);
+    }
+
 
     /**
      * 定义选择操作
@@ -138,6 +169,25 @@ public class TaskManagerActivity extends AppCompatActivity {
         //数据转化
         String deleteSize = Formatter.formatFileSize(getApplicationContext(), memory);
         Toast.makeText(getApplicationContext(), "共清理"+deleteTaskInfoList.size()+"个进程,释放"+deleteSize+"内存空间", Toast.LENGTH_SHORT).show();
+
+        // 更改运行中的进程个数以及剩余总内存
+        processCount = processCount - deleteTaskInfoList.size();
+        runningProgressCount.setText("运行中进程:" + processCount + "个");
+
+        // 更改剩余总内存,重新获取剩余总内存
+        // 获取剩余,总内存'
+        long availableRam = TaskTools.getAvailableRam(getApplicationContext());
+        // 数据转化
+        String availableRAM = Formatter.formatFileSize(getApplicationContext(),
+                availableRam);
+
+        long totalRam=TaskTools.getTotalRam();
+        // 数据转化
+        String totalRAM = Formatter.formatFileSize(getApplicationContext(),
+                totalRam);
+        ramAvailableText.setText("剩余/总内存:" + availableRAM + "/"
+                + totalRAM);
+
         //为下次清理进程做准备
         deleteTaskInfoList.clear();
         deleteTaskInfoList=null;
