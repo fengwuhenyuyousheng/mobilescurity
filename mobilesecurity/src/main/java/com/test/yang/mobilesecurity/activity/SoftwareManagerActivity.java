@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.test.yang.mobilesecurity.R;
 import com.test.yang.mobilesecurity.engine.SoftWareInfoEngine;
 import com.test.yang.mobilesecurity.model.AppInfo;
+import com.test.yang.mobilesecurity.tools.DensityUtils;
 import com.test.yang.mobilesecurity.tools.MyAsycnTaks;
 import com.test.yang.mobilesecurity.tools.StoreSpaceTools;
 
@@ -213,7 +214,7 @@ public class SoftwareManagerActivity extends AppCompatActivity implements View.O
                 int y = location[1];
                 //parent : 要挂载在那个控件上
                 //gravity,x,y : 控制popuwindow显示的位置
-                popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x+100, y);
+                popupWindow.showAtLocation(parent, Gravity.LEFT | Gravity.TOP, x+ DensityUtils.dp2px(getApplicationContext(), 50), y);
                 //添加背景
 
                 //缩放动画
@@ -226,7 +227,7 @@ public class SoftwareManagerActivity extends AppCompatActivity implements View.O
 
                 //透明度动画
                 AlphaAnimation alphaAnimation=new AlphaAnimation(0.3f,1.0f);
-                alphaAnimation.setDuration(2000);
+                alphaAnimation.setDuration(1000);
 
                 //动画插值器
                 AnimationSet animationSet=new AnimationSet(true);

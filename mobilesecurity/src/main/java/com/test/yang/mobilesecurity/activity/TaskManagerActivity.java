@@ -1,6 +1,8 @@
 package com.test.yang.mobilesecurity.activity;
 
 import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,12 +45,14 @@ public class TaskManagerActivity extends AppCompatActivity {
     private TaskInfo taskInfo;
     private MyTaskInfoAdapter myTaskInfoAdapter;
     private int processCount;
+    private SharedPreferences spConfig;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_manager);
+        spConfig=getSharedPreferences("config",MODE_PRIVATE);
         taskListView= (ListView) findViewById(R.id.task_list_view);
         loadProgressBar= (ProgressBar) findViewById(R.id.load_progress_bar);
         selectAllButton= (Button) findViewById(R.id.select_all_button);
@@ -91,7 +95,7 @@ public class TaskManagerActivity extends AppCompatActivity {
 
 
     /**
-     * 定义选择操作
+     * 定义全选选择操作
      * @param v
      */
     public void selectAll(View v){
@@ -101,9 +105,11 @@ public class TaskManagerActivity extends AppCompatActivity {
                 userTaskInfoList.get(i).setChecked(true);
             }
         }
-        //系统进程
-        for (int i = 0; i < systemTaskInfoList.size(); i++) {
-            systemTaskInfoList.get(i).setChecked(true);
+        if(spConfig.getBoolean("show_system_progress",true)) {
+            //系统进程
+            for (int i = 0; i < systemTaskInfoList.size(); i++) {
+                systemTaskInfoList.get(i).setChecked(true);
+            }
         }
         //更新界面
         myTaskInfoAdapter.notifyDataSetChanged();
@@ -118,9 +124,11 @@ public class TaskManagerActivity extends AppCompatActivity {
         for (int i = 0; i < userTaskInfoList.size(); i++) {
             userTaskInfoList.get(i).setChecked(false);
         }
-        //系统进程
-        for (int i = 0; i < systemTaskInfoList.size(); i++) {
-            systemTaskInfoList.get(i).setChecked(false);
+        if(spConfig.getBoolean("show_system_progress",true)) {
+            //系统进程
+            for (int i = 0; i < systemTaskInfoList.size(); i++) {
+                systemTaskInfoList.get(i).setChecked(false);
+            }
         }
         //更新界面
         myTaskInfoAdapter.notifyDataSetChanged();
@@ -185,7 +193,7 @@ public class TaskManagerActivity extends AppCompatActivity {
         // 数据转化
         String totalRAM = Formatter.formatFileSize(getApplicationContext(),
                 totalRam);
-        ramAvailableText.setText("剩余/总内存:" + availableRAM + "/"
+        ramAvailableText.setText("可用/总内存:" + availableRAM + "/"
                 + totalRAM);
 
         //为下次清理进程做准备
@@ -201,7 +209,14 @@ public class TaskManagerActivity extends AppCompatActivity {
      * @param v
      */
     public void clearSetting(View v){
+        Intent jumpTaskSettingActivity=new Intent(TaskManagerActivity.this,TaskSettingActivity.class);
+        startActivityForResult(jumpTaskSettingActivity,1);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        myTaskInfoAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -245,7 +260,7 @@ public class TaskManagerActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return userTaskInfoList.size()+systemTaskInfoList.size()+2;
+            return spConfig.getBoolean("show_system_progress",true)?userTaskInfoList.size()+systemTaskInfoList.size()+2:userTaskInfoList.size()+1;
         }
 
         @Override

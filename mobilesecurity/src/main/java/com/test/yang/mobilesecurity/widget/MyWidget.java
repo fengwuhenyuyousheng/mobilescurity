@@ -20,6 +20,8 @@ public class MyWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        Intent startWidgetService=new Intent(context,WidgetService.class);
+        context.startService(startWidgetService);
     }
 
     @Override

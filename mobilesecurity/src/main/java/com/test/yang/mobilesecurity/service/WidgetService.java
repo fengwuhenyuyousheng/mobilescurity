@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -26,7 +27,10 @@ public class WidgetService extends Service {
 
     private AppWidgetManager appWidgetManager;
     private WidgetReceiver widgetReceiver;
+    private ScreenOffReceiver screenOffReceiver;
+    private ScreenOnReceiver screenOnReceiver;
     private Timer timer;
+    private SharedPreferences spConfig;
 
     public WidgetService() {
     }
@@ -39,27 +43,56 @@ public class WidgetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        spConfig=getSharedPreferences("config",MODE_PRIVATE);
         appWidgetManager=AppWidgetManager.getInstance(this);
         updateWidget();
         //注册清理进程广播接受者
         //1.广播接受者
         widgetReceiver = new WidgetReceiver();
         //2.设置接受的广播事件
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("mobilesecurity.WIDGET_CLEAR_ONCLICK");
+        IntentFilter widgetIntentFilter = new IntentFilter();
+        widgetIntentFilter.addAction("mobilesecurity.WIDGET_CLEAR_ONCLICK");
         //3.注册广播接受者
-        registerReceiver(widgetReceiver, intentFilter);
+        registerReceiver(widgetReceiver, widgetIntentFilter);
+
+        //注册锁屏广播接受者
+        screenOffReceiver=new ScreenOffReceiver();
+        IntentFilter screenOffIntentFilter =new IntentFilter();
+
+        screenOffIntentFilter.addAction("android.intent.action.SCREEN_OFF");
+        registerReceiver(screenOffReceiver,screenOffIntentFilter);
+
+        //注册解锁广播接受者
+        screenOnReceiver=new ScreenOnReceiver();
+        IntentFilter screenOnIntentFilter =new IntentFilter();
+        screenOnIntentFilter.addAction("android.intent.action.SCREEN_ON");
+        registerReceiver(screenOnReceiver,screenOnIntentFilter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        stopUpdateWidget();
         //注销清理进程的广播接受者
         if (widgetReceiver != null) {
             unregisterReceiver(widgetReceiver);
             widgetReceiver = null;
         }
-        //停止更新widget
+        if (screenOffReceiver != null) {
+            unregisterReceiver(screenOffReceiver);
+            screenOffReceiver = null;
+        }
+        if (screenOnReceiver != null) {
+            unregisterReceiver(screenOnReceiver);
+            screenOnReceiver = null;
+        }
+
+    }
+
+    /**
+     * 停止更新桌面控件
+     */
+    private void stopUpdateWidget(){
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -109,6 +142,33 @@ public class WidgetService extends Service {
         public void onReceive(Context context, Intent intent) {
             Log.d("WidgetReceiver","接收到桌面控件广播");
             killProgress();
+        }
+    }
+
+    /**
+     * 创建桌面控件锁屏广播接收者
+     */
+    private class ScreenOffReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            stopUpdateWidget();
+            Log.d("ScreenOffReceiver","锁屏广播接收者");
+            if(spConfig.getBoolean("lock_screen_clear",false)){
+                killProgress();
+            }
+        }
+    }
+
+    /**
+     * 创建桌面控件亮屏广播接收者
+     */
+    private class ScreenOnReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("ScreenOnReceiver","亮屏广播接收者");
+            updateWidget();
         }
     }
 

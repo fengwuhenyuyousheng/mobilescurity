@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -106,20 +108,55 @@ public class SpalshActivity extends AppCompatActivity {
         }
 
         codyDB();
+        shortcut();
 
         if(mSharedPreferences.getBoolean("openAddressService",false) &&
-                !RunningAddress.isRunningAddressService("com.test.yang.photosafe.service.AddressService",
+                !RunningAddress.isRunningAddressService("com.test.yang.mobilesecurity.service.AddressService",
                         getApplicationContext())){
             openAddressService();
         }
         if(mSharedPreferences.getBoolean("openCallSmsService",false) &&
-                !RunningAddress.isRunningAddressService("com.test.yang.photosafe.service.CallSmsService",
+                !RunningAddress.isRunningAddressService("com.test.yang.mobilesecurity.service.CallSmsService",
                         getApplicationContext())){
             openCallSmsService();
         }
 
     }
 
+    /**
+     * 创建快捷方式
+     */
+    private void shortcut() {
+        if (mSharedPreferences.getBoolean("firstshortcut", true)) {
+            Toast.makeText(this,"创建快捷方式",Toast.LENGTH_SHORT).show();
+            // 给桌面发送一个广播
+            Intent intent = new Intent(
+                    "com.android.launcher.action.INSTALL_SHORTCUT");
+            // 设置属性
+            // 设置快捷方式名称
+            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机卫士");
+            // 设置快捷方式的图标
+            Bitmap value = BitmapFactory.decodeResource(getResources(),R.drawable.app_log_small);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, value);
+            // 设置快捷方式执行的操作
+            Intent startAppIntent = new Intent();
+            startAppIntent.setAction("com.test.yang.mobilesecurity.activity.HomeActivity");
+            startAppIntent.addCategory("android.intent.category.DEFAULT");
+            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, startAppIntent);
+            sendBroadcast(intent);
+
+            //保存已经创建快捷方式的状态
+            SharedPreferences.Editor edit = mSharedPreferences.edit();
+            edit.putBoolean("firstshortcut", false);
+            edit.commit();
+        }else{
+            Toast.makeText(this,"已经创建过快捷方式了",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 开启拦截服务
+     */
     private  void openCallSmsService(){
         Intent openAddressService=new Intent(this, CallSmsService.class);
         startService(openAddressService);
@@ -180,7 +217,7 @@ public class SpalshActivity extends AppCompatActivity {
     private String getVersionName(){
         PackageManager pm=getPackageManager();
         try {
-            PackageInfo pi=pm.getPackageInfo("com.test.yang.photosafe",0);
+            PackageInfo pi=pm.getPackageInfo("com.test.yang.mobilesecurity",0);
             return pi.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -279,7 +316,7 @@ public class SpalshActivity extends AppCompatActivity {
         final TextView downloadProgress= (TextView) findViewById(R.id.download_progress);
         HttpUtils httpUtils=new HttpUtils();
         httpUtils.download(mApkURL,
-                "/storage/emulated/0/Download/photosafe-debug2.apk",
+                "/storage/emulated/0/Download/mobilesecurity-debug2.apk",
                 new RequestCallBack<File>() {
             @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
@@ -312,7 +349,7 @@ public class SpalshActivity extends AppCompatActivity {
      */
     protected void installAPK(){
         Uri installUri=Uri.fromFile(
-                new File("/storage/emulated/0/Download/photosafe-debug2.apk"));
+                new File("/storage/emulated/0/Download/mobilesecurity-debug2.apk"));
         Intent installIntent=new Intent(Intent.ACTION_VIEW);
         installIntent.setDataAndType(installUri,"application/vnd.android.package-archive");
         startActivityForResult(installIntent,0);
