@@ -107,7 +107,8 @@ public class SpalshActivity extends AppCompatActivity {
             }).start();
         }
 
-        codyDB();
+        codyDB("address.db");
+        codyDB("antivirus.db");
         shortcut();
 
         if(mSharedPreferences.getBoolean("openAddressService",false) &&
@@ -127,7 +128,7 @@ public class SpalshActivity extends AppCompatActivity {
      * 创建快捷方式
      */
     private void shortcut() {
-        if (mSharedPreferences.getBoolean("firstshortcut", true)) {
+        if (mSharedPreferences.getBoolean("first_shortcut", true)) {
             Toast.makeText(this,"创建快捷方式",Toast.LENGTH_SHORT).show();
             // 给桌面发送一个广播
             Intent intent = new Intent(
@@ -147,7 +148,7 @@ public class SpalshActivity extends AppCompatActivity {
 
             //保存已经创建快捷方式的状态
             SharedPreferences.Editor edit = mSharedPreferences.edit();
-            edit.putBoolean("firstshortcut", false);
+            edit.putBoolean("first_shortcut", false);
             edit.commit();
         }else{
             Toast.makeText(this,"已经创建过快捷方式了",Toast.LENGTH_SHORT).show();
@@ -172,20 +173,20 @@ public class SpalshActivity extends AppCompatActivity {
     /**
      * 拷贝数据库
      */
-    private void codyDB() {
+    private void codyDB(final String DBName) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File file=new File(getFilesDir(),"address.db");
+                File file=new File(getFilesDir(),DBName);
                 if(!file.exists()) {
-                    //从assects目录中读取数据库
-                    //获取assects管理者
+                    //从assets目录中读取数据库
+                    //获取assets管理者
                     AssetManager assetManager = getAssets();
                     InputStream inputStream = null;
                     FileOutputStream fileOutputStream = null;
                     try {
                         //打开数据库获得输入流
-                        inputStream = assetManager.open("address.db");
+                        inputStream = assetManager.open(DBName);
                         //封装存放路径
                         fileOutputStream = new FileOutputStream(file);
                         //新建缓冲流

@@ -62,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
                     case 4:
                         break;
                     case 5:
+                        Intent jumpAntivirusActivity=new Intent(HomeActivity.this,AntivirusActivity.class);
+                        startActivity(jumpAntivirusActivity);
                         break;
                     case 6:
                         break;
